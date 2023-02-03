@@ -12,7 +12,7 @@ from django_tenants.utils import (
 from tenant_users.tenants.models import ExistsError, InactiveError
 
 
-def provision_tenant(tenant_name, tenant_slug, user_email, is_staff=False):
+def provision_tenant(tenant_name, tenant_slug, user_email, is_staff=False, **tenant_extra):
     """Create a tenant with default roles and permissions.
 
     Returns:
@@ -54,6 +54,7 @@ def provision_tenant(tenant_name, tenant_slug, user_email, is_staff=False):
                 slug=tenant_slug,
                 schema_name=schema_name,
                 owner=user,
+                **tenant_extra
             )
 
             # Add one or more domains for the tenant

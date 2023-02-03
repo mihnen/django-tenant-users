@@ -248,6 +248,13 @@ The user with the specified email will not be created by the ``provision_tenant`
 
 **Note:** Since provisioning a tenant also has to create the entire schema -- depending on the models installed, it can take a while. It is recommended that this does not occur in the request/response cycle. A good asynchronous option is to use a task runner like Celery (along with tenant-schemas-celery) to handle this.
 
+If your tenant model requires extra fields in order to create an instance such as when using django-tenants multi type tenants feature you can pass the additional arguments to the ``provision_tenant`` and they will be forwarded to the tenant model's constructor. In the example below we are passing the tenant type of "evilcustomer" to our tenant model.
+
+.. code-block:: python
+
+    from tenant_users.tenants.tasks import provision_tenant
+
+    fqdn = provision_tenant(tenant_name="EvilCorp", tenant_slug="evilcorp", user_email="admin@evilcorp.com", type='evilcustomer').
 
 .. _creating-a-user:
 
